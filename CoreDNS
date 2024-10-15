@@ -1,0 +1,27 @@
+.:53 {
+  # 绑定interface ip
+  bind 0.0.0.0
+  # 先走本机的hosts
+  # https://coredns.io/plugins/hosts/
+  hosts {
+# 设置缓存服务器的 ip
+    192.168.3.80 registry.k8s.io
+    # ttl
+    ttl 60
+    # 重载hosts配置
+    reload 1m
+    # 继续执行
+    fallthrough
+  }
+
+  # 最后所有的都转发到系统配置的上游dns服务器去解析
+  forward . /etc/resolv.conf
+  # 缓存时间ttl
+  cache 120
+  # 自动加载配置文件的间隔时间
+  reload 6s
+  # 输出日志
+  log
+  # 输出错误
+  errors
+}
