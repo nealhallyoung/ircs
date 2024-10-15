@@ -1,0 +1,38 @@
+version: 0.1
+log:
+    level: error
+storage:
+    delete:
+        enabled: true
+    cache:
+        blobdescriptor: redis
+    filesystem:
+        rootdirectory: /var/lib/registry
+    maintenance:
+        uploadpurging:
+            enabled: false
+http:
+  addr: :80
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
+
+# 部分上游需要该选项，诸如 quay
+# 详情参 https://github.com/distribution/distribution/issues/2367#issuecomment-454805687
+compatibility:
+    schema1:
+        enabled: true
+
+proxy:
+    remoteurl: https://registry.k8s.io
+    # 更换为上游的地址。
+
+redis:
+    addr: redis:6379
+
+
+
